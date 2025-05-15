@@ -1,0 +1,11 @@
+.demo-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem;
+    background-color: #ffafaf;
+}
+
+.message {
+    margin-top: 2rem;
+}

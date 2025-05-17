@@ -1,5 +1,5 @@
 <div class="demo-child">
     <h2>Child Component</h2>
-    <p>Received from parent: {{ value() }}</p>
-    <button (click)="notifyParent()">Notify Parent</button>
+    <p data-testid="child-value">Received from parent: {{ value() }}</p>
+    <button data-testid="notify-parent-btn" (click)="notifyParent()">Notify Parent</button>
 </div>

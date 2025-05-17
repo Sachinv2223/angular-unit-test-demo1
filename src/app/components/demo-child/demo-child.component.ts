@@ -6,11 +6,17 @@ import { signal, output, InputSignal } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './demo-child.component.html',
-  styleUrl: './demo-child.component.css'
+  styleUrls: ['./demo-child.component.css']
 })
 export class DemoChildComponent {
-  
-  value = input<string>('');
+
+  // Optional input with default value
+  // value = input<string>('');
+
+  // Required input, must be set by parent
+  value = input.required<string>();
+
+  // output signal to notify parent
   notify = output<string>();
 
   notifyParent() {

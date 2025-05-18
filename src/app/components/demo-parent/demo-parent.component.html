@@ -1,6 +1,7 @@
 <div class="demo-parent">
     <h1>Parent Component</h1>
-    <app-demo-child [value]="parentValue" (notify)="onChildNotify($event)">
+    <app-demo-child [(userName)]="userName" [value]="parentValue" (notify)="onChildNotify($event)">
     </app-demo-child>
     <p class="message">{{ messageFromChild() }}</p>
+    <p>Username: {{userName()}}</p>
 </div>

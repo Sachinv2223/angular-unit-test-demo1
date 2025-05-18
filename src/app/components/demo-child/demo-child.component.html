@@ -2,4 +2,11 @@
     <h2>Child Component</h2>
     <p data-testid="child-value">Received from parent: {{ value() }}</p>
     <button data-testid="notify-parent-btn" (click)="notifyParent()">Notify Parent</button>
+    <hr>
+    <div>
+        <label for="">Username: </label>
+        <!-- <input type="text" [value]="userName()" (input)="userName.set($event.target.value)" id="username"> -->
+        <input data-testid="username-input-field" [ngModel]="userName()" (ngModelChange)="userName.set($event)" name="username">
+    </div>
+    <p data-testid="child-username-value">Username: {{userName()}}</p>
 </div>

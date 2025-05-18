@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DemoChildComponent } from './demo-child.component';
+import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 describe('DemoChildComponent', () => {
   let component: DemoChildComponent;
@@ -8,15 +10,15 @@ describe('DemoChildComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DemoChildComponent]
+      imports: [DemoChildComponent, FormsModule]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DemoChildComponent);
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('should create DemoChildComponent', () => {
     expect(component).toBeTruthy();
   });
 
@@ -70,5 +72,49 @@ describe('DemoChildComponent', () => {
 
     expect(component.notifyParent).toHaveBeenCalled();
   });
+
+  it('should initialize userName with the default value', () => {
+    expect(component.userName()).toBe('John Doe from child');
+  });
+
+  it('should update userName value', () => {
+    fixture.componentRef.setInput('userName', 'Jane Smith from parent');
+    expect(component.userName()).toBe('Jane Smith from parent');
+  });
+
+  it('userName should be a signal (callable)', () => {
+    expect(typeof component.userName).toBe('function');
+    expect(component.userName()).toBeDefined();
+  });
+
+  it('should render the updated value of userName in the template', () => {
+    fixture.componentRef.setInput('userName', 'Jane Smith from parent');
+    fixture.componentRef.setInput('value', 'test');
+    fixture.detectChanges();
+
+    const userNameElement = fixture.nativeElement.querySelector('[data-testid="child-username-value"]');
+    expect(userNameElement.textContent).toContain('Username: Jane Smith from parent');
+  });
+
+  it('should update username in p-tag when input value changes', async () => {
+    // Arrange
+    fixture.componentRef.setInput('value', 'test');
+    fixture.detectChanges();
+    await fixture.whenStable(); // Wait for all changes to complete
+
+    const input = fixture.debugElement.query(By.css('[data-testid="username-input-field"]')).nativeElement;
+    const testValue = 'testuser';
+
+    // Act
+    input.value = testValue;
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges(); // Trigger change detection
+    await fixture.whenStable(); // Wait for all changes to complete
+
+    // Assert
+    const pTag = fixture.debugElement.query(By.css('[data-testid="child-username-value"]')).nativeElement;
+    expect(pTag.textContent).toContain(testValue);
+  });
+
 
 });

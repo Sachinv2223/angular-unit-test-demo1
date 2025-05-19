@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+hr {
+  border: none;
+  /* Reset default borders */
+  border-top: 1px solid black;
+  /* Set a top border */
+  height: 0;
+  /* Ensure no extra height from other sources */
+  width: 100%;
+  /* Full width */
+  height: 1px;
+}

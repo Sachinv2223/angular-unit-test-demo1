@@ -5,14 +5,14 @@
       aria-label="Search" style="padding: 4px; width: 200px;" />
   </div>
 
-  <table *ngIf="pagedData() as pageData; else noData">
+  <table *ngIf="pagedData() && pagedData().length > 0; else noData">
     <thead>
       <tr>
         <th scope="col" *ngFor="let col of columns()">{{ col | uppercase }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of pageData">
+      <tr *ngFor="let row of pagedData()">
         <td *ngFor="let col of columns()">
           <ng-container *ngIf="col !== 'ACTION'; else copyBtn">
             {{ row[col] }}

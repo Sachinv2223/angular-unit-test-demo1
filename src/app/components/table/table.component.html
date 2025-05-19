@@ -2,33 +2,39 @@
 
   <div style="margin-bottom: 12px; float: right;">
     <input type="text" placeholder="Search..." [ngModel]="searchTerm()" (ngModelChange)="onSearch($event)"
-      style="padding: 4px; width: 200px;" />
+      aria-label="Search" style="padding: 4px; width: 200px;" />
   </div>
 
-  <table *ngIf="pagedData() && pagedData().length">
+  <table *ngIf="pagedData() as pageData; else noData">
     <thead>
       <tr>
-        <th *ngFor="let col of columns()">{{ col | uppercase }}</th>
+        <th scope="col" *ngFor="let col of columns()">{{ col | uppercase }}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of pagedData()">
-        <ng-container *ngFor="let col of columns()">
-          <td *ngIf="col !== 'ACTION'">{{ row[col] }}</td>
-          <td *ngIf="col === 'ACTION'">
-            <button (click)="copyRow(row)">{{ row[col] }}</button>
-          </td>
-        </ng-container>
+      <tr *ngFor="let row of pageData">
+        <td *ngFor="let col of columns()">
+          <ng-container *ngIf="col !== 'ACTION'; else copyBtn">
+            {{ row[col] }}
+          </ng-container>
+          <ng-template #copyBtn>
+            <button type="button" (click)="copyRow(row)">{{ row[col] }}</button>
+          </ng-template>
+        </td>
       </tr>
-    </tbody>
+    </tbody> 
   </table>
-  <p *ngIf="!pagedData() || !pagedData().length">No data available.</p>
+  <ng-template #noData>
+    <p>No data available.</p>
+  </ng-template>
 
   <!-- Pagination Controls -->
   <div *ngIf="totalPages() > 1" style="margin: 2rem 0; float: right;">
-    <button (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">Prev</button>
+    <button type="button" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1"
+      aria-label="previous button">Prev</button>
     <span> Page {{ currentPage() }} of {{ totalPages() }} </span>
-    <button (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()">Next</button>
+    <button type="button" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()"
+      aria-label="next button">Next</button>
   </div>
 
 </div>

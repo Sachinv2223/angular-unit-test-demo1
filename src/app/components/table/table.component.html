@@ -2,7 +2,7 @@
 
   <div style="margin-bottom: 12px; float: right;">
     <input type="text" placeholder="Search..." [ngModel]="searchTerm()" (ngModelChange)="onSearch($event)"
-      aria-label="Search" style="padding: 4px; width: 200px;" />
+      aria-label="Search" style="padding: 4px; width: 200px;" data-testid="search-input" />
   </div>
 
   <table *ngIf="pagedData() && pagedData().length > 0; else noData">
@@ -31,10 +31,10 @@
   <!-- Pagination Controls -->
   <div *ngIf="totalPages() > 1" style="margin: 2rem 0; float: right;">
     <button type="button" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1"
-      aria-label="previous button">Prev</button>
+      aria-label="previous button" data-testid="prev-page-btn">Prev</button>
     <span> Page {{ currentPage() }} of {{ totalPages() }} </span>
     <button type="button" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()"
-      aria-label="next button">Next</button>
+      aria-label="next button" data-testid="next-page-btn">Next</button>
   </div>
 
 </div>

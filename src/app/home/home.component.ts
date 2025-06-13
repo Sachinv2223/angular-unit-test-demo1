@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
 import { DemoParentComponent } from '../components/demo-parent/demo-parent.component';
 import { TableComponent } from '../components/table/table.component';
+import { SelectModule } from 'primeng/select';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [DemoParentComponent, TableComponent],
+  imports: [DemoParentComponent, TableComponent, SelectModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
 
   title = "Home";
+  demoFormgroup: FormGroup;
 
   // Example for your parent component TypeScript file
   myData = [
@@ -23,5 +26,20 @@ export class HomeComponent {
     { id: 6, name: 'Frank', age: 29, email: 'frank@example.com' },
     { id: 7, name: 'Grace', age: 31, email: 'grace@example.com' },
   ];
+
+  cities = [
+    { label: 'New York', value: 'NY' },
+    { label: 'Los Angeles', value: 'LA' },
+    { label: 'Chicago', value: 'CHI' },
+    { label: 'Houston', value: 'HOU' },
+    { label: 'Phoenix', value: 'PHX' }
+  ];
+
+  constructor(private fb: FormBuilder) {
+    // Initialize the form group if needed
+    this.demoFormgroup = this.fb.group({
+      selectedCity: [''] // Example form control
+    });
+  }
 
 }
